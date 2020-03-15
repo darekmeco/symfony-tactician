@@ -4,7 +4,7 @@ use NextCv\Modules\Resume\Controller\ResumeController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes) {
-    $routes->add('api_index', '/index')
+    $routes->add('api_index', '/index3')
         ->controller([ResumeController::class, 'all'])
         ->methods(['GET', 'HEAD']);
 

@@ -1,18 +1,19 @@
 <?php
 
+use NextCv\Modules\User\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /** @var ContainerBuilder $container */
 $container->loadFromExtension('security', [
     'encoders' => [
-        'App\Entity\User' => [
+        User::class => [
             'algorithm' => 'bcrypt'
         ],
     ],
     'providers' => [
         'entity_provider' => [
             'entity' => [
-                'class' => 'App\Entity\User',
+                'class' => User::class,
                 'property' => 'email'
             ],
         ],

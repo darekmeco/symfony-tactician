@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace NextCv\Modules\User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -38,6 +38,10 @@ class User implements UserInterface
      */
     private $isActive;
 
+    private $friendsWithMe;
+
+    private $myFriends;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -67,7 +71,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -75,7 +79,8 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = [];
+        //$roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
@@ -85,7 +90,6 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-
         return $this;
     }
 
@@ -94,7 +98,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
