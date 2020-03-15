@@ -1,2 +1,2 @@
 # symfony-tactician
-tactician snadbox
+tactician sandbox
