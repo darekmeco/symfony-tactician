@@ -1,8 +1,10 @@
 <?php
+
 namespace NextCv\Modules\User\Repository;
 
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use NextCv\Modules\User\Entity\User;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -34,6 +36,55 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    /**
+     * @param int $userId
+     * @param int $friendId
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function addFriend(int $userId, int $friendId)
+    {
+        $user = $this->find($userId);
+        $friend = $this->find($friendId);
+        $currentFriends = $user->getMyFriends();
+
+        if (!$currentFriends->contains($friend)) {
+            $currentFriends->add($friend);
+        }
+
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+    /**
+     * @param int $userId
+     * @param array $friendIds
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function syncFriends(int $userId, array $friendIds)
+    {
+        $user = $this->find($userId);
+        $currentFriends = $user->getMyFriends();
+
+        $syncFriends = new ArrayCollection($this->findBy(['id' => $friendIds]));
+        $currentFriends->map(function ($row) use ($syncFriends, $currentFriends) {
+            if (!$syncFriends->contains($row)) {
+                $currentFriends->removeElement($row);
+            }
+        });
+
+        $syncFriends->map(function ($row) use ($syncFriends, $currentFriends) {
+            if (!$currentFriends->contains($row)) {
+                $currentFriends->add($row);
+            }
+        });
+
+        $this->_em->persist($user);
+        $this->_em->flush();
+
     }
 
     // /**

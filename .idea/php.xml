@@ -83,7 +83,8 @@
       <path value="$PROJECT_DIR$/vendor/league/tactician-logger" />
       <path value="$PROJECT_DIR$/vendor/league/tactician" />
       <path value="$PROJECT_DIR$/vendor/league/tactician-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/messenger" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
 </project>

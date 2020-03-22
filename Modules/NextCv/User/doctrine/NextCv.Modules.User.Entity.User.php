@@ -50,12 +50,6 @@ $metadata->mapManyToMany([
         ]
 ]);
 
-
-//$metadata->mapField(array(
-//    'fieldName' => 'friendsWithMe',
-//    'manyToMany'
-//));
-
 $metadata->mapField(array(
     'fieldName' => 'id',
     'columnName' => 'id',

@@ -3,6 +3,7 @@
 namespace NextCv\Modules\User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -62,6 +63,14 @@ class User implements UserInterface
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyFriends(): PersistentCollection
+    {
+        return $this->myFriends;
     }
 
     /**

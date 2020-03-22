@@ -2,27 +2,22 @@
 
 
 namespace App\Core\CommandBus\Command\User;
-
-
-use App\Repository\UserRepository;
+use NextCv\Modules\User\Repository\UserRepository;
 
 class AddFriendHandler
 {
     /**
      * @var UserRepository
      */
-    private $userRepository;
+    private UserRepository $userRepository;
 
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
 
-    public function execute(AddFriendCommand $command)
+    public function handle(AddFriendCommand $command): void
     {
-        $user = $this->userRepository->find($command->getUserId());
-        $friend = $this->userRepository->find($command->getFirndId());
-
-        $user->addFriend($friend);
+        $this->userRepository->addFriend($command->getUserId(), $command->getfriendId());
     }
 }

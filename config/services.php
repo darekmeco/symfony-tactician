@@ -29,7 +29,18 @@ return function (ContainerConfigurator $configurator) {
         ->exclude('../Modules/NextCv/Resume/Resource');
 
     $services->load('NextCv\\Modules\\User\\Controller\\', '../Modules/NextCv/User/Controller');
- $services->load('NextCv\\Modules\\User\\Repository\\', '../Modules/NextCv/User/Repository');
+    $services->load('NextCv\\Modules\\User\\Repository\\', '../Modules/NextCv/User/Repository');
+
+    $services->load('App\\Core\\QueryBus\\', '../src/Core/QueryBus');
+    $services->load('App\\Core\\Http\\', '../src/Core/Http');
+
+    $services
+        ->load('App\\Core\\CommandBus\\Command\\User\\', '../src/Core/CommandBus/Command/User/*Handler.php')
+        ->tag('tactician.handler', ['typehints' => true]);
+
+    $services
+        ->load('App\\Core\\QueryBus\\Query\\', '../src/Core/QueryBus/Query/*Handler.php')
+        ->tag('messenger.message_handler', ['typehints' => true]);
 
     $services->set(AdminModule::class)
         ->configurator(ref(\NextCv\Modules\Admin\Config\AdminConfigurator::class));

@@ -16,6 +16,8 @@ return function (RoutingConfigurator $routes) {
         ->controller([ResumeController::class, 'store'])
         ->methods(['POST', 'HEAD']);
 
+
+
     $routes->add('api_find', '/{id}')
         ->controller([ResumeController::class, 'find'])
         ->methods(['GET', 'HEAD']);
